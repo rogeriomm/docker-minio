@@ -1,5 +1,6 @@
 #
 # https://docs.min.io/docs/deploy-minio-on-docker-compose.html
+# https://github.com/vimagick/dockerfiles/tree/master/minio
 #
 version: '3.7'
 
@@ -61,12 +62,11 @@ services:
 
   nginx:
     image: nginx:1.19.2-alpine
-    hostname: nginx
+    hostname: nginx.bdb
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf:ro
     ports:
-      - "9000:9000"
-      - "9001:9001"
+      - "9090:9000"
     depends_on:
       - minio1
       - minio2
@@ -93,6 +93,8 @@ volumes:
   data4-2:
 
 networks:
+  minio-net:
+    internal: true
   spark-net:
     external:
       name: spark-net
